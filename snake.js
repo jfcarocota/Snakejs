@@ -8,6 +8,8 @@ const head = {
 	y : 0
 };
 
+let food = null;
+
 let dx = 0;
 let dy = 0;
 
@@ -21,11 +23,27 @@ function main(){
 function update(){
 	head.x += dx;
 	head.y += dy;
+
+	if(!food){
+		food = {
+			x : getRandomX(),
+			y : getRandomY()
+		};
+	}
+}
+
+function getRandomX(){
+	return (parseInt(Math.random() * 20)) * 20;
+}
+
+function getRandomY(){
+	return parseInt(Math.random() * 20) * 23;
 }
 
 function draw(){
 	context.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
 	drawObject(head);
+	drawObject(food);
 }
 
 function drawObject(obj){
