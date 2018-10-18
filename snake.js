@@ -24,6 +24,10 @@ function update(){
 	head.x += dx;
 	head.y += dy;
 
+	if(food && head.x === food.x && head.y === food.y){
+		food = null;		
+	}
+
 	if(!food){
 		food = {
 			x : getRandomX(),
@@ -37,16 +41,18 @@ function getRandomX(){
 }
 
 function getRandomY(){
-	return parseInt(Math.random() * 20) * 23;
+	return parseInt(Math.random() * 23) * 20;
 }
 
 function draw(){
-	context.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
-	drawObject(head);
-	drawObject(food);
+	context.fillStyle = 'black';
+	context.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
+	drawObject(head, 'lime');
+	drawObject(food, 'white');
 }
 
-function drawObject(obj){
+function drawObject(obj, color){
+	context.fillStyle = color;
 	context.fillRect(obj.x, obj.y, SIZE, SIZE);
 }
 
