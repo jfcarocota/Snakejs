@@ -8,6 +8,8 @@ const head = {
 	y : 0
 };
 
+const body = [];
+
 let food = null;
 
 let dx = 0;
@@ -21,11 +23,32 @@ function main(){
 }
 
 function update(){
+	let prevX, prevY;
+
+	if(body.length >= 1){
+		prevX = body[body.length - 1].x;
+		prevY = body[body.length - 1].y;
+	}else{
+		prevX = head.x;
+		prevY = head.y;
+	}
+
+
+	for(let i = body.length - 1; i >= 1; --i){
+		body[i].x = body[i - 1].x;
+		body[i].y = body[i - 1].y;
+	}
+	if(body.length >= 1){
+		body[0].x = head.x;
+		body[0].y = head.y;
+	}
+
 	head.x += dx;
 	head.y += dy;
 
 	if(food && head.x === food.x && head.y === food.y){
-		food = null;		
+		food = null;	
+		increaseSnakeSize(prevX, prevY);	
 	}
 
 	if(!food){
@@ -34,6 +57,13 @@ function update(){
 			y : getRandomY()
 		};
 	}
+}
+
+function increaseSnakeSize(prevX, prevY){
+	body.push({
+		x : prevX,
+		y : prevY
+	});
 }
 
 function getRandomX(){
@@ -47,7 +77,11 @@ function getRandomY(){
 function draw(){
 	context.fillStyle = 'black';
 	context.fillRect(0, 0, mainCanvas.width, mainCanvas.height);
+
 	drawObject(head, 'lime');
+	body.forEach(
+		elem => drawObject(elem, 'lime')
+	);
 	drawObject(food, 'white');
 }
 
