@@ -15,7 +15,7 @@ let food = null;
 let dx = 0;
 let dy = 0;
 
-setInterval(main, 1000);
+setInterval(main, 200);
 
 function main(){
 	update();
@@ -23,6 +23,9 @@ function main(){
 }
 
 function update(){
+
+	checkCollision();
+
 	let prevX, prevY;
 
 	if(body.length >= 1){
@@ -56,6 +59,15 @@ function update(){
 			x : getRandomX(),
 			y : getRandomY()
 		};
+	}
+}
+
+
+function checkCollision(){
+	for(let i = 0; i < body.length; ++i){
+		if(head.x == body[i].x && head.y == body[i].y){
+			alert("Has perdido");
+		}
 	}
 }
 
